@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/head') %>
+<body>
+
+<%- include('partials/header') %>
+
+<main class="container">
+    <h2 style="color: #4a4e69; margin-bottom: 30px;">Seu Carrinho de Compras</h2>
+
+    <% if (cartItems.length > 0) { %>
+        <section class="cart-summary">
+            <div class="cart-items">
+                <% cartItems.forEach(item => { %>
+                    <div class="cart-item">
+                        <img src="/images/<%= item.image %>" alt="<%= item.name %>">
+                        <div class="item-details">
+                            <h3><%= item.name %></h3>
+                            <p>Preço unitário: R$ <%= item.formattedPrice %></p>
+                            <p>Quantidade: **<%= item.itemQuantity %>**</p>
+                            <p class="item-total">Total: R$ <%= item.itemTotal %></p>
+                        </div>
+                        <a href="/remover/<%= item.id %>" class="btn btn-secondary" style="background: #e63946;">Remover</a>
+                    </div>
+                <% }); %>
+            </div>
+
+            <div class="cart-totals">
+                <h3>Resumo do Pedido</h3>
+                <div class="total-line"><span>Subtotal:</span> **R$ <%= subtotal %>**</div>
+                <div class="total-line"><span>Frete:</span> **R$ <%= frete %>**</div>
+                <hr>
+                <div class="total-line final-total"><span>Total Final:</span> **R$ <%= totalFinal %>**</div>
+                
+                <button class="btn" style="width: 100%; margin-top: 20px;">Finalizar Compra</button>
+            </div>
+        </section>
+    <% } else { %>
+        <p style="text-align: center; font-size: 1.2em; padding: 50px;">Seu carrinho está vazio. <a href="/" style="color: #c9184a; text-decoration: none; font-weight: bold;">Veja nossos produtos!</a></p>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,281 @@
+/* --- PALETA DE CORES ---
+ * Primária (Fundo/Texto): #2c3e50 (Azul Marinho Escuro)
+ * Destaque 1 (Acentos/Botões): #e74c3c (Vermelho Coral)
+ * Destaque 2 (Hover/Secundário): #f39c12 (Amarelo Ouro)
+ * Fundo Principal: #ecf0f1 (Cinza Suave/Off-White)
+ */
+
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Aplica a nova fonte */
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    background-color: #ecf0f1; /* Fundo mais suave */
+    color: #34495e; /* Texto escuro, mas não preto */
+}
+
+/* CONTAINER GERAL */
+.container {
+    width: 90%;
+    max-width: 1280px; /* Pouco mais largo */
+    margin: 30px auto; /* Aumenta margem superior */
+    padding: 20px;
+}
+
+/* --- HEADER / NAV BAR --- */
+.navbar {
+    background: #202224; /* Azul Marinho Escuro */
+    padding: 20px 5%; /* Aumenta o padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+}
+
+.logo h1 {
+    font-size: 2em;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800; /* Mais negrito */
+}
+
+.navbar a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+.nav-links a {
+    margin-left: 35px;
+    font-weight: 600; /* Fonte semi-bold */
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #f39c12; /* Amarelo Ouro no hover */
+}
+
+/* --- TÍTULOS DE SEÇÃO --- */
+main h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #2c3e50;
+    font-size: 2.2em;
+    font-weight: 800;
+}
+
+
+/* --- BOTÕES GERAIS --- */
+.btn {
+    display: inline-block;
+    padding: 14px 25px;
+    background: #e74c3c; /* Vermelho Coral de destaque */
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px; /* Borda super arredondada (Pill shape) */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: #c0392b; /* Vermelho mais escuro no hover */
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #95a5a6; /* Cinza suave */
+    margin-left: 10px;
+    border-radius: 50px;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+/* --- GRID DE PRODUTOS (HOMEPAGE) --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.product-card {
+    background: #fff;
+    border: none;
+    border-radius: 15px; /* Mais arredondado */
+    padding: 20px;
+    text-align: center;
+    
+    /* Sombra refinada e suave */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px); /* Levanta mais */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Sombra mais intensa */
+}
+
+.product-card img {
+    width: 100%;
+    height: 280px; /* Imagem maior e mais destacada */
+    object-fit: cover;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    font-size: 1.6em;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.product-card .price {
+    color: #e74c3c; /* Vermelho Coral */
+    font-size: 2em;
+    font-weight: 800;
+    margin: 10px 0 25px;
+    letter-spacing: 0.5px;
+}
+
+.product-card .btn {
+    width: 90%; /* Deixa o botão mais largo */
+}
+
+/* --- DETALHE DO PRODUTO --- */
+.product-detail {
+    display: flex;
+    gap: 60px; /* Aumenta a distância */
+    align-items: flex-start;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.product-image img {
+    border-radius: 12px;
+}
+
+.product-info h1 {
+    font-size: 3em;
+    color: #2c3e50;
+    font-weight: 800;
+}
+
+.price-large {
+    font-size: 2.5em;
+    color: #e74c3c;
+    font-weight: 800;
+}
+
+.description {
+    font-size: 1.1em;
+}
+
+/* --- ESTILOS DO CARRINHO --- */
+.cart-summary {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.cart-items {
+    flex: 2;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.cart-item img {
+    width: 90px;
+    height: 90px;
+}
+
+.item-details h3 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.item-total {
+    color: #e74c3c;
+    font-size: 1.2em;
+}
+
+.cart-totals {
+    flex: 1;
+    background: #fdfdfd;
+    border: 1px solid #ddd;
+    padding: 30px;
+}
+
+.total-line span {
+    font-weight: 600;
+}
+
+.final-total {
+    color: #2c3e50;
+}
+
+/* --- ESTILOS DE CONTATO E NOVIDADES --- */
+.contact-content, .news-list {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-group label {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    border: 1px solid #bdc3c7;
+    transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #e74c3c;
+    outline: none;
+}
+
+
+/* --- FOOTER --- */
+footer {
+    background: #202224;
+    color: #bdc3c7;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 80px;
+}
+
+footer p {
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
