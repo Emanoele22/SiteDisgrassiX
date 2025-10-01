@@ -5,42 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <%- include('partials/head') %>
+<%- include('partials/head') %>
 <body>
 
 <%- include('partials/header') %>
 
 <main class="container">
-    <h2 style="text-align: center; color: #4a4e69; margin-bottom: 30px;">Fale Conosco</h2>
-    
-    <div class="contact-content" style="max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-        
-        <p style="text-align: center; margin-bottom: 20px;">Envie-nos uma mensagem e responderemos o mais rápido possível.</p>
+    <h2 style="color: #2c3e50; text-align: center; margin-bottom: 50px;">Fale Conosco</h2>
 
-        <form action="/contato" method="POST"> 
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="name" style="display: block; margin-bottom: 5px; font-weight: bold;">Nome:</label>
-                <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">E-mail:</label>
-                <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="message" style="display: block; margin-bottom: 5px; font-weight: bold;">Mensagem:</label>
-                <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
-            </div>
-            
-            <button type="submit" class="btn" style="width: 100%;">Enviar Mensagem</button>
-        </form>
+    <section class="contact-layout">
         
-        <p style="text-align: center; margin-top: 25px; font-size: 0.9em;">
-            Ou ligue para nós: (11) 99999-8888 | Atendimento: Seg a Sex, 9h-18h.
-        </p>
-    </div>
+        <div class="contact-info">
+            <h3>Informações da Loja</h3>
+            <p>Seja para tirar dúvidas sobre um produto ou acompanhar seu pedido, estamos aqui para ajudar!</p>
+            
+            <div class="info-group">
+                <h4>Atendimento</h4>
+                <p>📞 (11) 98765-4321</p>
+                <p>📧 **contato@disgrassix.com.br**</p>
+            </div>
+
+            <div class="info-group">
+                <h4>Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 09:00h às 18:00h</p>
+                <p>Sábados: 09:00h às 13:00h</p>
+            </div>
+
+            <div class="info-group">
+                <h4>Endereço (Escritório Central)</h4>
+                <p>Rua dos Acessórios, 1010</p>
+                <p>Bairro da Moda - São Paulo/SP</p>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <h3>Envie uma Mensagem</h3>
+            
+            <form action="/contato" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Seu Nome</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Seu Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Assunto</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">Enviar Mensagem</button>
+            </form>
+        </div>
+
+    </section>
 </main>
 
 <%- include('partials/footer') %>

@@ -5,45 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <%- include('partials/head') %>
+<%- include('partials/head') %>
 <body>
 
 <%- include('partials/header') %>
 
 <main class="container">
-    <h2 style="color: #4a4e69; margin-bottom: 30px;">Seu Carrinho de Compras</h2>
+    <h2 style="color: #2c3e50;">Seu Carrinho de Compras</h2>
 
     <% if (cartItems.length > 0) { %>
-        <section class="cart-summary">
-            <div class="cart-items">
+        <div class="cart-summary">
+            
+            <section class="cart-items">
                 <% cartItems.forEach(item => { %>
                     <div class="cart-item">
                         <img src="/images/<%= item.image %>" alt="<%= item.name %>">
                         <div class="item-details">
                             <h3><%= item.name %></h3>
-                            <p>Preço unitário: R$ <%= item.formattedPrice %></p>
+                            <p>Preço unitário: R$ <%= item.price.toFixed(2).replace('.', ',') %></p>
                             <p>Quantidade: **<%= item.itemQuantity %>**</p>
                             <p class="item-total">Total: R$ <%= item.itemTotal %></p>
                         </div>
-                        <a href="/remover/<%= item.id %>" class="btn btn-secondary" style="background: #e63946;">Remover</a>
+                        
+                        <a href="/remover/<%= item.id %>" class="btn-secondary" style="background: #e74c3c; padding: 8px 15px; font-size: 0.9em;">
+                            Remover
+                        </a>
                     </div>
                 <% }); %>
-            </div>
+            </section>
 
             <div class="cart-totals">
                 <h3>Resumo do Pedido</h3>
-                <div class="total-line"><span>Subtotal:</span> **R$ <%= subtotal %>**</div>
-                <div class="total-line"><span>Frete:</span> **R$ <%= frete %>**</div>
-                <hr>
-                <div class="total-line final-total"><span>Total Final:</span> **R$ <%= totalFinal %>**</div>
                 
-                <button class="btn" style="width: 100%; margin-top: 20px;">Finalizar Compra</button>
+                <form action="/finalizar" method="POST"> 
+                    
+                    <div class="total-line">
+                        <span>Subtotal:</span>
+                        <span>R$ <%= subtotal %></span>
+                    </div>
+                    <div class="total-line">
+                        <span>Frete:</span>
+                        <span>R$ <%= frete %></span>
+                    </div>
+                    <hr style="margin: 15px 0; border-color: #ddd;">
+                    <div class="total-line final-total">
+                        <span>Total Final:</span>
+                        <span>R$ <%= totalFinal %></span>
+                    </div>
+
+                    <input type="hidden" name="finalAmount" value="<%= totalFinal %>">
+                    
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">
+                        Finalizar Compra
+                    </button>
+                </form>
+                
             </div>
-        </section>
+        </div>
+        
     <% } else { %>
-        <p style="text-align: center; font-size: 1.2em; padding: 50px;">Seu carrinho está vazio. <a href="/" style="color: #c9184a; text-decoration: none; font-weight: bold;">Veja nossos produtos!</a></p>
+        <div style="text-align: center; padding: 50px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 1.5em; color: #7f8c8d; margin-bottom: 20px;">Seu carrinho está vazio. Adicione alguns acessórios incríveis!</p>
+            <a href="/" class="btn">Explorar Produtos</a>
+        </div>
     <% } %>
+
 </main>
 
 <%- include('partials/footer') %>

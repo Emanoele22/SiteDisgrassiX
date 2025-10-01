@@ -1,16 +1,20 @@
 const express = require('express');
 const session = require('express-session');
 const app = express();
-// Configurado para a porta 3007, conforme sua preferência
-const PORT = 3008; 
+const PORT = 3007; 
 
-// 1. Configurar o middleware de Sessão
+// --- 1. MIDDLEWARES ESSENCIAIS ---
+
+// Configurar o middleware de Sessão
 app.use(session({
-    secret: 'chave_secreta_disgrassix_2025', // Chave usada para assinar o cookie da sessão
+    secret: 'chave_secreta_disgrassix_2025',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } // Expira em 24 horas
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
+
+// Middleware para processar dados de formulário POST (Checkout E Contato)
+app.use(express.urlencoded({ extended: true })); 
 
 // Configurar o EJS como motor de template
 app.set('view engine', 'ejs');
@@ -19,8 +23,8 @@ app.set('views', 'views');
 // Servir arquivos estáticos (CSS, imagens, etc.)
 app.use(express.static('public'));
 
-// 2. Dados de Exemplo (Acessórios e Novidades)
-// 'price' é usado para cálculo. 'formattedPrice' é usado para exibição.
+// --- 2. DADOS DE PRODUTOS E NOVIDADES ---
+
 const products = [
     { id: 1, name: "Colar Estelar", price: 45.00, formattedPrice: "R$ 45,00", image: "imagem1.jpg", description: "Um colar elegante e minimalista com um pingente de estrela guia." },
     { id: 2, name: "Pulseira Zênite", price: 29.90, formattedPrice: "R$ 29,90", image: "imagem2.jpg", description: "Pulseira de couro sintético marrom com fecho magnético. Moderna, casual e unissex." },
@@ -39,18 +43,19 @@ const newsData = [
 ];
 
 
-// 3. Middleware para Carrinho: Garante que o carrinho exista e o injeta nas views
+// --- 3. MIDDLEWARE DE CARRINHO (SESSÃO) ---
+
+// Garante que o carrinho exista e o injeta nas views
 app.use((req, res, next) => {
-    // Inicializa o carrinho na sessão se não existir
     if (!req.session.cart) {
         req.session.cart = [];
     }
-    // Adiciona o contador do carrinho (soma das quantidades) para ser usado no header.ejs
+    // Adiciona o contador do carrinho para ser usado no header.ejs
     res.locals.cartCount = req.session.cart.reduce((total, item) => total + item.quantity, 0);
     next();
 });
 
-// --- Rotas de Navegação (Páginas Estáticas e Dinâmicas) ---
+// --- 4. ROTAS DE NAVEGAÇÃO (GET) ---
 
 // Rota da Homepage
 app.get('/', (req, res) => {
@@ -75,7 +80,7 @@ app.get('/produto/:id', (req, res) => {
     }
 });
 
-// Rota da Página de Contato
+// Rota da Página de Contato (Exibe o formulário)
 app.get('/contato', (req, res) => {
     res.render('contact', {
         pageTitle: 'Contato | DisgrassiX'
@@ -86,11 +91,12 @@ app.get('/contato', (req, res) => {
 app.get('/novidades', (req, res) => {
     res.render('news', {
         pageTitle: 'Novidades | DisgrassiX',
-        newProducts: newsData // Passa os dados de novidades
+        newProducts: newsData
     });
 });
 
-// --- Rotas de Funcionalidade do Carrinho ---
+
+// --- 5. ROTAS DE FUNCIONALIDADE DO CARRINHO ---
 
 // Rota para Adicionar ao Carrinho
 app.get('/adicionar/:id', (req, res) => {
@@ -101,9 +107,8 @@ app.get('/adicionar/:id', (req, res) => {
         const existingItem = req.session.cart.find(item => item.id === productId);
 
         if (existingItem) {
-            existingItem.quantity += 1; // Aumenta a quantidade
+            existingItem.quantity += 1;
         } else {
-            // Adiciona o novo item
             req.session.cart.push({
                 id: productToAdd.id,
                 name: productToAdd.name,
@@ -113,7 +118,6 @@ app.get('/adicionar/:id', (req, res) => {
             });
         }
     }
-    // Redireciona para o carrinho
     res.redirect('/carrinho');
 });
 
@@ -127,21 +131,22 @@ app.get('/carrinho', (req, res) => {
         subtotal += itemTotal;
         return {
             ...item,
-            // Formata o total do item para exibição
+            // Formata o total do item para exibição (ex: 120,00)
             itemTotal: itemTotal.toFixed(2).replace('.', ','), 
             itemQuantity: item.quantity
         };
     });
 
-    const freteValor = 15.00;
-    const totalFinal = (subtotal + freteValor).toFixed(2).replace('.', ',');
+    const freteValor = 15.00; // Valor fixo para simulação
+    const totalFinal = (subtotal + freteValor); // Cálculo em número
     
     res.render('cart', {
         pageTitle: 'Seu Carrinho | DisgrassiX',
         cartItems: cartItems,
+        // Envia os totais formatados para o EJS
         subtotal: subtotal.toFixed(2).replace('.', ','),
         frete: freteValor.toFixed(2).replace('.', ','),
-        totalFinal: totalFinal
+        totalFinal: totalFinal.toFixed(2).replace('.', ',')
     });
 });
 
@@ -149,14 +154,57 @@ app.get('/carrinho', (req, res) => {
 app.get('/remover/:id', (req, res) => {
     const productId = parseInt(req.params.id);
     
-    // Filtra o array do carrinho, removendo o item com o ID correspondente
     req.session.cart = req.session.cart.filter(item => item.id !== productId);
     
     res.redirect('/carrinho');
 });
 
 
-// Iniciar o Servidor
+// --- 6. ROTAS DE CHECKOUT E CONTATO (PROCESSAMENTO POST) ---
+
+// Rota para Finalizar a Compra (Requisição POST)
+app.post('/finalizar', (req, res) => {
+    // Captura o valor do total (enviado via input hidden no form)
+    const totalPago = req.body.finalAmount; 
+    
+    // Simulação do processamento do pedido
+    console.log('-------------------------------------------');
+    console.log(`PEDIDO FINALIZADO com sucesso!`);
+    console.log(`Total Recebido: R$ ${totalPago}`);
+    console.log(`Itens comprados: ${req.session.cart.length}`);
+    console.log('-------------------------------------------');
+
+    // Limpar o Carrinho (Zera a sessão do carrinho)
+    req.session.cart = [];
+
+    // Redirecionar para a página de Confirmação
+    res.redirect('/confirmacao-pedido');
+});
+
+// Rota da Página de Confirmação (GET)
+app.get('/confirmacao-pedido', (req, res) => {
+    res.render('checkout-success', {
+        pageTitle: 'Pedido Confirmado | DisgrassiX',
+    });
+});
+
+// NOVO: Rota para processar o formulário de Contato (Requisição POST)
+app.post('/contato', (req, res) => {
+    // A rota GET /contato exibe o formulário. Esta rota POST o processa.
+    console.log('--- NOVA MENSAGEM DE CONTATO RECEBIDA ---');
+    console.log(`Nome: ${req.body.name}`);
+    console.log(`Email: ${req.body.email}`);
+    console.log(`Assunto: ${req.body.subject}`);
+    console.log(`Mensagem: ${req.body.message.substring(0, 50)}...`);
+    console.log('-------------------------------------------');
+
+    // Simula o envio de e-mail e envia um alerta ao usuário antes de voltar
+    res.send('<script>alert("Mensagem enviada com sucesso! Em breve entraremos em contato."); window.history.back();</script>');
+});
+
+
+// --- 7. INICIAR O SERVIDOR ---
+
 app.listen(PORT, () => {
     console.log(`DisgrassiX Server rodando em http://localhost:${PORT}`);
 });
